@@ -9,7 +9,7 @@
 5. **電源供應** : 小米行動電源5000mAh、18650鋰電池 x 3、LM2596
 
 ## 程式開發工具與環境
-STM32CubeIDE 1.16.0
+STM32CubeIDE 1.16.0  
 RaspberryPi : Ubuntu server 22.04.03 LTS (64bit)、ROS2 Humble Hawksbill
 
 ## 安裝與使用
@@ -27,10 +27,10 @@ RaspberryPi : Ubuntu server 22.04.03 LTS (64bit)、ROS2 Humble Hawksbill
 
 ## 致謝
 此專案引用並修改了以下專案的部分程式碼
-Hideaki Tai (hideakitai)'s GitHub project: https://github.com/hideakitai/MPU9250
+Hideaki Tai (hideakitai)'s GitHub project: https://github.com/hideakitai/MPU9250  
 Alex Baucom (alexbaucom17)'s GitHub project: https://github.com/alexbaucom17/DominoRobot/blob/master/src/robot/src/SmoothTrajectoryGenerator.cpp#L234
 
 ## 聯絡我們
-姚昱志
-顏佑丞 polie4523@gmail.com
-蕭丞佑
+姚昱志  
+顏佑丞 polie4523@gmail.com  
+蕭丞佑  
