@@ -26,9 +26,9 @@ RaspberryPi : Ubuntu server 22.04.03 LTS (64bit)、ROS2 Humble Hawksbill
 
 
 ## 致謝
-此專案引用並修改了以下專案的部分程式碼
-Hideaki Tai (hideakitai)'s GitHub project: https://github.com/hideakitai/MPU9250  
-Alex Baucom (alexbaucom17)'s GitHub project: https://github.com/alexbaucom17/DominoRobot/blob/master/src/robot/src/SmoothTrajectoryGenerator.cpp#L234
+此專案引用並修改了以下專案的部分程式碼  
+* Hideaki Tai (hideakitai)'s GitHub project: https://github.com/hideakitai/MPU9250  
+* Alex Baucom (alexbaucom17)'s GitHub project: https://github.com/alexbaucom17/DominoRobot/blob/master/src/robot/src/SmoothTrajectoryGenerator.cpp#L234
 
 ## 聯絡我們
 姚昱志  
