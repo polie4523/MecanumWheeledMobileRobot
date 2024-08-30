@@ -1,4 +1,4 @@
-# MecanumWheeledMobileRobot
+# Mecanum Wheeled Mobile Robot
 這是一個軟硬體皆自行設計整合的四Mecanum輪型移動機器人專案。主要功能為筆電利用MATLAB GUI程式規劃出一序列的點到點避障路徑，經由ROS2對機器人下指令移動，並在移動中即時回傳機器人目前位置顯示在GUI上。機器人程式採用C++與C程式語言在ROS2環境下運作。
 
 ## 主要硬體

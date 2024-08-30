@@ -1,14 +1,20 @@
 #include <iostream>
+#include <csignal>
 #include "MecanumWMR.h"
 
+/*volatile sig_atomic_t stop = 0;
+
+void handle_sigint(int signum) {
+    stop = 1;
+}*/
+
 int main(int argc, char** argv) {
+    //signal(SIGINT, handle_sigint);
     MecanumWMR wmr;
     if (wmr.init()==false) return 1;
     wmr.setInitCond(0,0,0);
-    wmr.setPIDgain_rotation(1,0.25,0.25);
-    
     std::array<float, 3> target_point = {0.0};
-    for (int i=0;i<2;i++) {
+    for (int i=0;i<3;i++) {
         std::cout<<"Please enter a target point [x, y, theta]: ";
         std::cin>>target_point[0]>>target_point[1]>>target_point[2];
         wmr.Point2PointMove(target_point);
