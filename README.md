@@ -9,7 +9,7 @@
 5. **電源供應** : 小米行動電源20000mAh、18650鋰電池 x 3、LM2596
 
 ## 程式開發工具與環境
-STM32CubeIDE 1.16.0  
+STM32 : STM32CubeIDE 1.16.0、firmware package version L4 1.17.2  
 RaspberryPi : Ubuntu server 22.04.03 LTS (64bit)、ROS2 Humble Hawksbill
 
 ## 安裝與使用

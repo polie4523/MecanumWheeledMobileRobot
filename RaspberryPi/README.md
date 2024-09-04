@@ -18,12 +18,14 @@ colcon build --symlink-install --packages-select mecanum_wmr
 沒有出現錯誤就安裝完成了  
 
 ## 本地測試程式
-1. 將MecanumWMR資料夾全部複製到家目錄
+1. 在家目錄建立/MecanumWMR資料夾，然後把MecanumWMR裡的全部檔案複製進去
+```bash
+mkdir MecanumWMR
+```
 2. 建立/build資料夾
 ```bash
 cd ~/MecanumWMR
 mkdir build
-cd build
 ```
 3. 使用cmake
 ```bash
