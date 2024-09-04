@@ -25,12 +25,8 @@ add_executable(control_node src/control_node.cpp)
 target_link_libraries(control_node MecanumWMR)
 ament_target_dependencies(control_node rclcpp geometry_msgs)
 
-add_executable(publisher src/publisher.cpp)
-ament_target_dependencies(publisher rclcpp geometry_msgs)
-
 install(TARGETS
   control_node
-  publisher
   DESTINATION lib/${PROJECT_NAME})
 install(
   DIRECTORY launch

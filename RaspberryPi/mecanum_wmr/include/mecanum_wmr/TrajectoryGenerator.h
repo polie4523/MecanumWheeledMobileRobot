@@ -13,9 +13,9 @@
 
 
 typedef struct {
-    float max_jerk {2};
-    float max_acc {0.4};
-    float max_vel {0.2};
+    float max_jerk {2.5};
+    float max_acc {0.5};
+    float max_vel {0.25};
 } Limits;
 
 typedef struct {

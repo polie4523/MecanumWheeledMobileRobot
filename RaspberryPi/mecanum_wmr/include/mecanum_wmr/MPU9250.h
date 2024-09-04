@@ -75,7 +75,7 @@ struct MPU9250Setting {
     MAG_OUTPUT_BITS mag_output_bits {MAG_OUTPUT_BITS::M16BITS};
     FIFO_SAMPLE_RATE fifo_sample_rate {FIFO_SAMPLE_RATE::SMPL_125HZ};
     uint8_t gyro_fchoice {0x03};
-    GYRO_DLPF_CFG gyro_dlpf_cfg {GYRO_DLPF_CFG::DLPF_5HZ};
+    GYRO_DLPF_CFG gyro_dlpf_cfg {GYRO_DLPF_CFG::DLPF_92HZ};
     uint8_t accel_fchoice {0x01};
     ACCEL_DLPF_CFG accel_dlpf_cfg {ACCEL_DLPF_CFG::DLPF_45HZ};
 };
@@ -99,7 +99,7 @@ class MPU9250 {
     int   gry_count = 1;
     float gyro_bias[3] {1.64795, 0.305176, 1.34277};  // gyro calibration value in GYRO_FS_SEL: 250dps
     float mag_bias_factory[3] {0., 0., 0.};
-    float mag_bias[3] {0., 0., 0.};  // mag calibration value in MAG_OUTPUT_BITS: 16BITS
+    float mag_bias[3] {-689.21f, -51.47f, 0.};  // mag calibration value in MAG_OUTPUT_BITS: 16BITS
     float mag_scale[3] {1., 1., 1.};
     float magnetic_declination = -5.6;  // Taiwan, 18th July 2024
 
@@ -116,6 +116,7 @@ class MPU9250 {
     float m[3] {0.f, 0.f, 0.f};
     float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};  // vector to hold quaternion
     float rpy[3] {0.f, 0.f, 0.f};
+    float yaw {0.f};
     float lin_acc[3] {0.f, 0.f, 0.f};  // linear acceleration (acceleration with gravity component subtracted)
     QuaternionFilter quat_filter;
     size_t n_filter_iter {1};
@@ -183,10 +184,12 @@ public:
     }
 
     bool update();
+    bool update2();
 
     float getRoll() const { return rpy[0]; }
     float getPitch() const { return rpy[1]; }
     float getYaw() const { return rpy[2]; }
+    float getyaw() const { return yaw; }
 
     float getEulerX() const { return rpy[0]; }
     float getEulerY() const { return -rpy[1]; }

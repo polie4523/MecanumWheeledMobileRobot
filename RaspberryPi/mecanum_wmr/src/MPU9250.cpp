@@ -7,9 +7,9 @@
 
 #include <iostream>
 #include <cmath>
-#include "MecanumWMR_control/MPU9250RegisterMap.h"
-#include "MecanumWMR_control/QuaternionFilter.h"
-#include "MecanumWMR_control/MPU9250.h"
+#include "mecanum_wmr/MPU9250RegisterMap.h"
+#include "mecanum_wmr/QuaternionFilter.h"
+#include "mecanum_wmr/MPU9250.h"
 
 #define DEG_TO_RAD (PI/180)
 
@@ -44,7 +44,7 @@ bool MPU9250::setup(const uint8_t addr, I2C& i2c, const MPU9250Setting& mpu_sett
 }
 
 /*The original version of the function "update"*/
-/*
+
 bool MPU9250::update() {
     if (!available()) return false;
 
@@ -87,10 +87,10 @@ bool MPU9250::update() {
         update_rpy(q[0], q[1], q[2], q[3]);
     }
     return true;
-} */
+} 
 
 /*The modified version of the function "update"*/
-bool MPU9250::update() {
+bool MPU9250::update2() {
     if (!available()) return false;
 
     update_accel_gyro();
@@ -103,16 +103,14 @@ bool MPU9250::update() {
         gry_count++;
     }
     for (int i=0;i<3;i++) gry[i] = g[i] - gyro_bias[i]/gry_count;
-
     g[2] = gry[2];
-
     if (!b_ahrs) {
         temperature_count = read_temperature_data();               // Read the adc values
         temperature = ((float)temperature_count) / 333.87 + 21.0;  // Temperature in degrees Centigrade
     } else {
-        rpy[2] += gry[2]*SAMPLE_TIME;
-        if (rpy[2] >= +180.f) rpy[2] -= 360.f;
-        else if (rpy[2] < -180.f) rpy[2] += 360.f;
+        yaw += gry[2]*SAMPLE_TIME;
+        if (yaw >= +180.f) yaw-= 360.f;
+        else if (yaw < -180.f) yaw += 360.f;
     }
     return true;
 }

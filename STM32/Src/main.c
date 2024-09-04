@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <math.h>
 #include "I2C_slave.h"
 #include "controller.h"
@@ -60,8 +61,7 @@ UART_HandleTypeDef huart2;
 Four_motor_t four_wheel;
 volatile I2C_Signal_t pi_signal = {.value=0};
 volatile I2C_Wheel_speed_t wheel_speed_ref, wheel_speed_est;
-// DSMC_GAIN dsmc_gain = {.A=0.9596f,.b=0.006395f,.c=3,.g=0.7f,.q=0.7f,.eta=2,.sat_width=0.5}; // 0.01
-DSMC_GAIN dsmc_gain = {.A=0.8835f,.b=0.0177f,.c=10,.g=0.4f,.q=0.9f,.eta=1,.sat_width=0.5f}; // 0.05
+DSMC_GAIN dsmc_gain;
 PID_GAIN pid_gain = {.Kp=10,.Ki=2,.Kd=0};
 /* USER CODE END PV */
 
@@ -126,10 +126,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   if (HAL_I2C_EnableListen_IT(&hi2c1)!=HAL_OK) Error_Handler();
   Motor_Init(&four_wheel);
+  setDSMCgain(&dsmc_gain, 0.8835f, 0.0177f, 10.f, 0.4f, 0.9f, 1.f, 0.5f);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+//  char message[30] = {0};
   while (1)
   {
 	  if (pi_signal.value==0) {
@@ -144,7 +146,10 @@ int main(void)
 		  Motor_Start();
 		  Timer_Enable();
 		  while (pi_signal.value==1) {
-			  Motor_Drive(&four_wheel);
+//			  sprintf(message, "%.5f\t%.5f\n", dsmc_gain.model[0].A, dsmc_gain.model[0].b);
+//			  HAL_UART_Transmit(&huart2, (uint8_t*) message, strlen(message)+1, HAL_MAX_DELAY);
+//			  Motor_Drive(&four_wheel);
+//			  HAL_Delay(100);
 		  }
 	  }
     /* USER CODE END WHILE */
@@ -707,21 +712,18 @@ void reset(void) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if(htim == &htim5) {
-    //float u=0.0f;
-    float control_input[WHEEL_NUM];
-    float filter_output[WHEEL_NUM];
+    float control_input[WHEEL_NUM]={0.f}, filter_output[WHEEL_NUM]={0.f};
     GetSpeed(&four_wheel);
     DSMC_step(control_input, wheel_speed_ref.value, four_wheel.Speed, dsmc_gain);
 //    PID_step(control_input, wheel_speed_ref.value, four_wheel.Speed, pid_gain);
+//    RLS_step(&dsmc_gain, control_input, four_wheel.Speed);
     for (short i = 0; i < WHEEL_NUM; i++) {
-      /*u = fabs(control_input[i]);
-      if (u < DEADZONE) four_wheel.PWMdutycycle[i] = 0;
-      else four_wheel.PWMdutycycle[i] = (uint32_t) u;*/
       four_wheel.PWMdutycycle[i] = (uint32_t) fabs(control_input[i]);
       four_wheel.Direction[i] = (signed char) SIGN(control_input[i]);
     }
 	MA_filter(filter_output, four_wheel.Speed);
 	for (short i = 0; i < WHEEL_NUM; i++) wheel_speed_est.value[i] = filter_output[i];
+	Motor_Drive(&four_wheel);
   }
 }
 
@@ -729,7 +731,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_13) {
 
-	}
+  }
 }
 /* USER CODE END 4 */
 

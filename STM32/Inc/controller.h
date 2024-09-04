@@ -21,8 +21,12 @@
 #endif
 
 typedef struct {
-    float A;
-    float b;
+	float A;
+	float b;
+} DSS_MODEL;
+
+typedef struct {
+	DSS_MODEL model[4];
     float c;
     float g;
     float q;
@@ -37,7 +41,9 @@ typedef struct {
 } PID_GAIN;
 
 float sat(float, const float, const float);
+void RLS_step(DSMC_GAIN *, const float *, volatile const float *);
 void DSMC_step(float *, volatile const float *, volatile const float *, const DSMC_GAIN);
+void setDSMCgain(DSMC_GAIN *, const float, const float, const float, const float, const float, const float, const float);
 void PID_step(float *, volatile const float *, volatile const float *, const PID_GAIN);
 void MA_filter(float *, volatile const float *);
 

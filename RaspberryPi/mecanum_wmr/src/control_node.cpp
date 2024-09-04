@@ -6,7 +6,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "geometry_msgs/msg/point.hpp"
-#include "MecanumWMR_control/MecanumWMR.h"
+#include "mecanum_wmr/MecanumWMR.h"
 
 
 using std::placeholders::_1;

@@ -2,7 +2,7 @@
 
 #include <cstring>
 #include "pigpiod_if2.h"
-#include "MecanumWMR_control/i2c_master.h"
+#include "mecanum_wmr/i2c_master.h"
 
 
 bool I2C::init() {

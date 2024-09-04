@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <array>
-#include "MecanumWMR_control/TrajectoryGenerator.h"
+#include "mecanum_wmr/TrajectoryGenerator.h"
 
 
 /* 

@@ -1,23 +1,19 @@
-/*
- * four_motor.h
- *
- *  Created on: Jul 11, 2024
- *      Author: polie
- */
+#ifndef __FM_H
+#define __FM_H
 
-#ifndef INC_FOUR_MOTOR_H_
-#define INC_FOUR_MOTOR_H_
 
-//#include "main.h"
+#include "main.h"
+#include <stdint.h>
 
+#ifndef WHEEL_NUM
 #define WHEEL_NUM 4
+#endif
 
 #ifndef SAMPLE_TIME
-#define SAMPLE_TIME 0.05f
+#define SAMPLE_TIME 0.05
 #endif
 
 #define CNT2RAD(X) (X/576.0f*2.0f*3.14159f)
-
 typedef struct
 {
   volatile float Speed[WHEEL_NUM];
@@ -32,4 +28,5 @@ void Motor_Stop(void);
 void Motor_Drive(Four_motor_t *const four_wheel);
 void GetSpeed(Four_motor_t *const four_wheel);
 
-#endif /* INC_FOUR_MOTOR_H_ */
+
+#endif //__FM_H

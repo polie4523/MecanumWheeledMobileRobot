@@ -1,11 +1,3 @@
-/*
- * four_motor.c
- *
- *  Created on: Jul 11, 2024
- *      Author: polie
- */
-
-
 #include "main.h"
 #include "four_motor.h"
 
@@ -19,8 +11,8 @@ extern TIM_HandleTypeDef htim2;
 void Motor_Init(Four_motor_t *const four_wheel)
 {
   four_wheel->Encoder_timer[0] = &htim1;
-  four_wheel->Encoder_timer[1] = &htim8;
-  four_wheel->Encoder_timer[2] = &htim4;
+  four_wheel->Encoder_timer[1] = &htim4;
+  four_wheel->Encoder_timer[2] = &htim8;
   four_wheel->Encoder_timer[3] = &htim3;
 
   four_wheel->PWMdutycycle[0] = 0;
@@ -66,16 +58,16 @@ void Motor_Drive(Four_motor_t *const four_wheel)
   htim2.Instance->CCR1 = four_wheel->PWMdutycycle[0];
   if (four_wheel->Direction[0]==1)
   {
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
-  }
-  else
-  {
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
   }
-  htim2.Instance->CCR2 = four_wheel->PWMdutycycle[1];
-  if (four_wheel->Direction[1]==1)
+  else
+  {
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_SET);
+  }
+  htim2.Instance->CCR2 = four_wheel->PWMdutycycle[2];
+  if (four_wheel->Direction[2]==1)
   {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
@@ -85,8 +77,8 @@ void Motor_Drive(Four_motor_t *const four_wheel)
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
   }
-  htim2.Instance->CCR3 = four_wheel->PWMdutycycle[2];
-  if (four_wheel->Direction[2]==1)
+  htim2.Instance->CCR3 = four_wheel->PWMdutycycle[1];
+  if (four_wheel->Direction[1]==1)
   {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
@@ -99,23 +91,26 @@ void Motor_Drive(Four_motor_t *const four_wheel)
   htim2.Instance->CCR4 = four_wheel->PWMdutycycle[3];
   if (four_wheel->Direction[3]==1)
   {
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
-  }
-  else
-  {
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
   }
+  else
+  {
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_RESET);
+  }
 }
 
-void GetSpeed(Four_motor_t *const four_wheel) {
+void GetSpeed(Four_motor_t *const four_wheel)
+{
   short count = 0;
   float theta_dot = 0.0f;
-  for (short i = 0; i < WHEEL_NUM; i++) {
+  for (short i = 0; i < WHEEL_NUM; i++)
+  {
     count = (short) (*(four_wheel->Encoder_timer[i])).Instance->CNT;
     (*(four_wheel->Encoder_timer[i])).Instance->CNT = 0;
     theta_dot = count/SAMPLE_TIME;
     four_wheel->Speed[i] = CNT2RAD(theta_dot);
+    if (i==1 || i==2) four_wheel->Speed[i] = -four_wheel->Speed[i];
   }
 }
