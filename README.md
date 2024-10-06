@@ -70,6 +70,6 @@ bool Point2PointMove(const std::array<float, 3> target_point)
 * [Alex Baucom (alexbaucom17)'s GitHub project](https://github.com/alexbaucom17/DominoRobot/blob/master/src/robot/src/SmoothTrajectoryGenerator.cpp#L234)
 
 ## 聯絡我們
-姚昱志 Gary Yao :  
+姚昱志 Gary Yao : a0970408081@gmail.com  
 顏佑丞 Eric Yan : polie4523@gmail.com  
 蕭丞佑 Bryan Hsiao : bryanhsiao200200000510@gmail.com
