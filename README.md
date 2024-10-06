@@ -62,7 +62,7 @@ bool Point2PointMove(const std::array<float, 3> target_point)
 
 
 ## 成果展示
-
+![](https://github.com/polie4523/MecanumWheeledMobileRobot/blob/main/MecanumWMR_example.gif)
 
 ## 致謝
 此專案引用並修改了以下專案的部分程式碼:  
