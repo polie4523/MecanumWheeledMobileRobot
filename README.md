@@ -1,6 +1,9 @@
 # Mecanum Wheeled Mobile Robot
 這是一個軟硬體皆自行設計整合的四Mecanum輪型移動機器人專案。主要功能為筆電利用MATLAB GUI程式規劃出一序列的點到點避障路徑，經由ROS2對機器人下指令移動，並在移動中即時回傳機器人目前位置顯示在GUI上。機器人程式採用C++與C程式語言在ROS2環境下運作。
 
+## 系統架構
+![](https://github.com/polie4523/MecanumWheeledMobileRobot/blob/4d1284c16a51f9d1ab4d7824849ec3069b06a096/System%20Architecture%20in%20ROS2.jpg)
+
 ## 主要硬體
 1. **計算單元** : RaspberryPi model 4B+、STM32 Nucleo L476RG
 2. **馬達** : TT馬達 x 4
